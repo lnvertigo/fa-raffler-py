@@ -13,7 +13,7 @@ entrantList = Tk()
 
 # title and size
 root.title("FA Watcher Raffle")
-root.geometry('350x200')
+root.geometry('350x380')
 entrantList.title("Entrants")
 entrantList.geometry('200x900')
 
@@ -25,9 +25,10 @@ mainListLabel = Label(root, text="Get followers list from:")
 unameText = Text(root, height=1, width=30)
 submit_button = Button(root, text="submit",command=lambda:unameSubmit())
 
-sndLabel = Label(root, text="Manual entries")
-newEntrantText = Text(root, height=1, width=30)
-entrant_submit_button = Button(root, text="submit",command=lambda:update_list_10())
+sndLabel = Label(root, text="\nManual entries")
+newEntrantTextbox = Text(root, height=10, width=30)
+entrant_submit1_button = Button(root, text="submit (+1)",command=lambda:update_list_1())
+entrant_submit10_button = Button(root, text="submit (+10)",command=lambda:update_list_10())
 
 countVar = IntVar()
 entrant_count = Label(root, textvariable=countVar)
@@ -88,10 +89,28 @@ def updatelist(lst):
 	entrantsListbox.pack()
 	list_count()
 
+def update_list_1():
+	rawentrants = newEntrantTextbox.get("1.0", "end-1c")
+
+	entrantslist = rawentrants.split('\n')
+	for entrant_newline in entrantslist:
+		if entrant_newline == '':
+			continue
+		entrantsListbox.insert(0, entrant_newline)
+
+	entrantsListbox.pack()
+	list_count()
+
 def update_list_10():
-	entrant = newEntrantText.get("1.0", "end-1c")
-	#for i in range(0,10):
-	entrantsListbox.insert(0, entrant)
+	rawentrants = newEntrantTextbox.get("1.0", "end-1c")
+
+	entrantslist = rawentrants.split('\n')
+	for entrant_newline in entrantslist:
+		if entrant_newline == '':
+			continue
+		for i in range(0,10):
+			entrantsListbox.insert(0, entrant_newline)
+
 	entrantsListbox.pack()
 	list_count()
 
@@ -113,8 +132,9 @@ def packer():
 	submit_button.pack()
 
 	sndLabel.pack()
-	newEntrantText.pack()
-	entrant_submit_button.pack()
+	newEntrantTextbox.pack()
+	entrant_submit1_button.pack()
+	entrant_submit10_button.pack()
 
 	entrant_count.pack()
 	winning_entrant.pack()
